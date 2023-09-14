@@ -1,5 +1,7 @@
 
 using HotelReviewsAPI.Data;
+using HotelReviewsAPI.Mappings;
+using HotelReviewsAPI.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelReviewsAPI
@@ -18,7 +20,11 @@ namespace HotelReviewsAPI
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddDbContext<HotelReviewsDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("HotelReviewsConnectionString")));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("HotelsReviewsConnectionString")));
+
+            builder.Services.AddScoped<IHotelsRepository, SQLHotelRepository>();
+
+            builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
             var app = builder.Build();
 

@@ -24,11 +24,9 @@ namespace HotelReviewsAPI.Migrations
 
             modelBuilder.Entity("HotelReviewsAPI.Models.Domain.Hotel", b =>
                 {
-                    b.Property<int>("HotelId")
+                    b.Property<Guid>("HotelId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HotelId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Contact")
                         .IsRequired()
@@ -49,14 +47,12 @@ namespace HotelReviewsAPI.Migrations
 
             modelBuilder.Entity("HotelReviewsAPI.Models.Domain.Rating", b =>
                 {
-                    b.Property<int>("RatingId")
+                    b.Property<Guid>("RatingId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RatingId"));
-
-                    b.Property<int>("ReviewId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ReviewId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Value")
                         .HasColumnType("int");
@@ -70,18 +66,16 @@ namespace HotelReviewsAPI.Migrations
 
             modelBuilder.Entity("HotelReviewsAPI.Models.Domain.Review", b =>
                 {
-                    b.Property<int>("ReviewId")
+                    b.Property<Guid>("ReviewId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Comment")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("HotelId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("HotelId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
@@ -89,8 +83,8 @@ namespace HotelReviewsAPI.Migrations
                     b.Property<DateTime>("ReviewDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ReviewId");
 
@@ -103,11 +97,9 @@ namespace HotelReviewsAPI.Migrations
 
             modelBuilder.Entity("HotelReviewsAPI.Models.Domain.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .IsRequired()
