@@ -9,6 +9,8 @@ namespace HotelReviewsAPI.Mappings
         public AutoMapperProfiles()
         {
             CreateMap<Hotel, HotelDto>().ReverseMap();
+            CreateMap<AddHotelRequestDto, Hotel>().ReverseMap();
+            CreateMap<UpdateHotelRequestDto,Hotel>().ReverseMap();
         }
     }
 }

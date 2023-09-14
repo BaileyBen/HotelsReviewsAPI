@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HotelReviewsAPI.Data;
+using HotelReviewsAPI.Models.Domain;
 using HotelReviewsAPI.Models.DTO;
 using HotelReviewsAPI.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -42,6 +43,55 @@ namespace HotelReviewsAPI.Controllers
             }
 
             return Ok(mapper.Map<HotelDto>(hotelDomainModel));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] AddHotelRequestDto addHotelRequestDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var hotelDomainModel = mapper.Map<Hotel>(addHotelRequestDto);
+
+                hotelDomainModel = await hotelRepository.CreateAsync(hotelDomainModel);
+
+                var hotelDtoModel = mapper.Map<HotelDto>(hotelDomainModel);
+
+                return Ok(hotelDtoModel);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+        }
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, UpdateHotelRequestDto updateHotelRequestDto)
+        {
+            var hotelDomainModel = mapper.Map<Hotel>(updateHotelRequestDto);
+
+            hotelDomainModel = await hotelRepository.UpdateAsync(id, hotelDomainModel);
+
+            if (hotelDomainModel == null)
+            {
+                return null;
+            }
+
+            return Ok(mapper.Map<HotelDto>(hotelDomainModel));
+        }
+
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            var deletedHotelDomainModel = await hotelRepository.DeleteAsync(id);
+
+            if (deletedHotelDomainModel == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(mapper.Map<HotelDto>(deletedHotelDomainModel));
         }
     }
 }
