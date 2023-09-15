@@ -20,6 +20,20 @@ namespace HotelReviewsAPI.Repositories
             return review;
         }
 
+        public async Task<Review> DeleteAsync(Guid id)
+        {
+            var existingReview = await _dbContext.Reviews.FirstOrDefaultAsync(x => x.UserId == id);
+
+            if (existingReview == null)
+            {
+                return null;
+            }
+            _dbContext.Reviews.Remove(existingReview);
+            await _dbContext.SaveChangesAsync();
+
+            return existingReview;
+        }
+
         public async Task<List<Review>> GetAllAsync()
         {
             return await _dbContext.Reviews.Include("User").Include("Hotel").AsQueryable().ToListAsync();

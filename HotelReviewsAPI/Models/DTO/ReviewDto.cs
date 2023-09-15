@@ -11,7 +11,6 @@ namespace HotelReviewsAPI.Models.DTO
         public DateTime ReviewDate { get; set; }
 
         public Hotel Hotel { get; set; }
-
         public User User { get; set; }
     }
 }

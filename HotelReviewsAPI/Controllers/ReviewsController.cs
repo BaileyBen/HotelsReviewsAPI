@@ -30,14 +30,14 @@ namespace HotelReviewsAPI.Controllers
         {
             var reviewDomainModel = await reviewsRepository.GetAllAsync();
 
-            return Ok(mapper.Map<List<Review>>(reviewDomainModel));
+            return Ok(mapper.Map<List<ReviewDto>>(reviewDomainModel));
         }
 
         [HttpGet]
         [Route("{id:Guid}")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
-            var reviewDomainModel = reviewsRepository.GetByIdAsync(id);
+            var reviewDomainModel = await reviewsRepository.GetByIdAsync(id);
 
             return Ok(mapper.Map<Review>(reviewDomainModel));
         }
@@ -88,7 +88,19 @@ namespace HotelReviewsAPI.Controllers
             return Ok(mapper.Map<ReviewDto>(reviewDomainModel));
         }
 
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            var deletedDomainModel = await reviewsRepository.DeleteAsync(id);
 
+            if (deletedDomainModel == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(mapper.Map<ReviewDto>(deletedDomainModel));
+        }
 
         private List<string> ValidateReview(AddReviewRequestDto reviewDto)
         {

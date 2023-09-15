@@ -35,9 +35,20 @@ namespace HotelReviewsAPI.Repositories
             return existingHotel;
         }
 
-        public async Task<List<Hotel>> GetAllAsync()
+        public async Task<List<Hotel>> GetAllAsync(string? filterOn = null, string? filterQuery = null)
         {
-            return await _dbContext.Hotels.Include("Reviews").AsQueryable().ToListAsync();
+            var hotels = _dbContext.Hotels.Include("Reviews").AsQueryable();
+
+            //Filtering
+            if (string.IsNullOrWhiteSpace(filterOn) == false && string.IsNullOrWhiteSpace(filterQuery) == false) {
+                if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    hotels = hotels.Where(x => x.Name.Contains(filterQuery));
+                }
+              
+            }
+            //return await _dbContext.Hotels.Include("Reviews").AsQueryable().ToListAsync();
+            return await hotels.ToListAsync();
         }
 
         public async Task<Hotel> GetByIdAsync(Guid id)

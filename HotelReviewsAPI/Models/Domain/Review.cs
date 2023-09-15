@@ -12,12 +12,12 @@ namespace HotelReviewsAPI.Models.Domain
 
         public Guid HotelId { get; set; }
 
-        [JsonIgnore]
-        public Hotel Hotel { get; set; }
-
-
         public Guid UserId { get; set; }
+
         [JsonIgnore]
         public User User { get; set; }
+
+        [JsonIgnore]
+        public Hotel Hotel { get; set; }
     }
 }
