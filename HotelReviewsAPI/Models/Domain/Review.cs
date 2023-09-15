@@ -9,15 +9,15 @@ namespace HotelReviewsAPI.Models.Domain
         public string Comment { get; set; }
         public DateTime ReviewDate { get; set; }
 
-        // Foreign key for Hotel
+
         public Guid HotelId { get; set; }
-        // Navigation property for hotel
+
         [JsonIgnore]
         public Hotel Hotel { get; set; }
 
-        // Foreign key for User
+
         public Guid UserId { get; set; }
-        // Navigation property for user
+        [JsonIgnore]
         public User User { get; set; }
     }
 }

@@ -74,6 +74,20 @@ namespace HotelReviewsAPI.Controllers
             return Ok(reviewDtoModel);
         }
 
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, UpdateReviewRequestDto updateReviewRequestDto)
+        {
+            var reviewDomainModel = mapper.Map<Review>(updateReviewRequestDto);
+
+            reviewDomainModel = await reviewsRepository.UpdateAsync(id, reviewDomainModel);
+
+            if (reviewDomainModel == null) {
+                return NotFound();
+            }
+            return Ok(mapper.Map<ReviewDto>(reviewDomainModel));
+        }
+
 
 
         private List<string> ValidateReview(AddReviewRequestDto reviewDto)

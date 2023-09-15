@@ -10,7 +10,6 @@ namespace HotelReviewsAPI.Models.Domain
         public string Location { get; set; }
         public string Contact { get; set; }
 
-        // Navigation property for reviews
         [JsonIgnore]
         public List<Review> Reviews { get; set; }
     }

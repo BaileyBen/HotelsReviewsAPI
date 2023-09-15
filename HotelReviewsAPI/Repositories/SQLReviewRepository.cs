@@ -29,5 +29,22 @@ namespace HotelReviewsAPI.Repositories
         {
             return await _dbContext.Reviews.FirstOrDefaultAsync(x => x.ReviewId == id);
         }
+
+        public async Task<Review> UpdateAsync(Guid id, Review review)
+        {
+            var existingReview = await _dbContext.Reviews.FirstOrDefaultAsync(x => x.ReviewId == id);
+
+            if (existingReview == null) {
+                return null;
+            }
+
+            existingReview.Rating = review.Rating;
+            existingReview.Comment = review.Comment;
+            existingReview.ReviewDate = review.ReviewDate;
+            
+            await _dbContext.SaveChangesAsync();
+
+            return existingReview;
+        }
     }
 }

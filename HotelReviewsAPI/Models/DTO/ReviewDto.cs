@@ -1,4 +1,5 @@
 ﻿using HotelReviewsAPI.Models.Domain;
+using System.Text.Json.Serialization;
 
 namespace HotelReviewsAPI.Models.DTO
 {
@@ -9,10 +10,8 @@ namespace HotelReviewsAPI.Models.DTO
         public string Comment { get; set; }
         public DateTime ReviewDate { get; set; }
 
-
         public Hotel Hotel { get; set; }
 
-        // Foreign key for User
         public User User { get; set; }
     }
 }

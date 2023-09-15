@@ -6,7 +6,6 @@
         public string Username { get; set; }
         public string Email { get; set; }
 
-        // Navigation property for reviews
         public List<Review> Reviews { get; set; }
     }
 }
