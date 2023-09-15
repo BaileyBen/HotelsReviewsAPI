@@ -11,6 +11,9 @@ namespace HotelReviewsAPI.Mappings
             CreateMap<Hotel, HotelDto>().ReverseMap();
             CreateMap<AddHotelRequestDto, Hotel>().ReverseMap();
             CreateMap<UpdateHotelRequestDto,Hotel>().ReverseMap();
+            CreateMap<Review, ReviewDto>().ReverseMap();
+            CreateMap<AddReviewRequestDto, Review>().ReverseMap();
+            CreateMap<UpdateReviewRequestDto, Review>().ReverseMap();
         }
     }
 }

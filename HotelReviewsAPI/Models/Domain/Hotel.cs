@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ViewEngines;
+using System.Text.Json.Serialization;
 
 namespace HotelReviewsAPI.Models.Domain
 {
@@ -10,6 +11,8 @@ namespace HotelReviewsAPI.Models.Domain
         public string Contact { get; set; }
 
         // Navigation property for reviews
+        [JsonIgnore]
         public List<Review> Reviews { get; set; }
     }
 }
+

@@ -16,9 +16,9 @@ namespace HotelReviewsAPI.Controllers
         private readonly IHotelsRepository hotelRepository;
         private readonly IMapper mapper;
 
-        public HotelsController(HotelReviewsDbContext _dbContext, IHotelsRepository hotelRepository, IMapper mapper)
+        public HotelsController(HotelReviewsDbContext dbContext, IHotelsRepository hotelRepository, IMapper mapper)
         {
-            dbContext = _dbContext;
+            this.dbContext = dbContext;
             this.hotelRepository = hotelRepository;
             this.mapper = mapper;
         }

@@ -23,6 +23,7 @@ namespace HotelReviewsAPI
             options.UseSqlServer(builder.Configuration.GetConnectionString("HotelsReviewsConnectionString")));
 
             builder.Services.AddScoped<IHotelsRepository, SQLHotelRepository>();
+            builder.Services.AddScoped<IReviewsRepository, SQLReviewRepository>();
 
             builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
