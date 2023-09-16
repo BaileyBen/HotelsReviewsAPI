@@ -35,7 +35,8 @@ namespace HotelReviewsAPI.Repositories
             return existingHotel;
         }
 
-        public async Task<List<Hotel>> GetAllAsync(string? filterOn = null, string? filterQuery = null)
+        public async Task<List<Hotel>> GetAllAsync(string? filterOn = null, string? filterQuery = null,
+            string? sortBy = null, bool? isAscending = true)
         {
             var hotels = _dbContext.Hotels.Include("Reviews").AsQueryable();
 
@@ -46,6 +47,19 @@ namespace HotelReviewsAPI.Repositories
                     hotels = hotels.Where(x => x.Name.Contains(filterQuery));
                 }
               
+            }
+
+            //Sorting
+            if (string.IsNullOrWhiteSpace(sortBy) == false)
+            {
+                if (sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    hotels = (bool)isAscending ? hotels.OrderBy(x => x.Name): hotels.OrderByDescending(x => x.Name);
+                }
+            }
+            else if (sortBy.Equals("Location", StringComparison.OrdinalIgnoreCase)) 
+            {
+                hotels = (bool)isAscending ? hotels.OrderBy(x => x.Location) : hotels.OrderByDescending(x => x.Location);
             }
             //return await _dbContext.Hotels.Include("Reviews").AsQueryable().ToListAsync();
             return await hotels.ToListAsync();

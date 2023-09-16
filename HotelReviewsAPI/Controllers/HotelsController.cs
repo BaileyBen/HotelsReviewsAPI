@@ -24,9 +24,10 @@ namespace HotelReviewsAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery)
+        public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery,
+            [FromQuery] string? sortBy, [FromQuery] bool? IsAscending)
         {
-            var hotelDomainModel = await hotelRepository.GetAllAsync(filterOn, filterQuery);
+            var hotelDomainModel = await hotelRepository.GetAllAsync(filterOn, filterQuery, sortBy, IsAscending ?? true);
 
             return Ok(mapper.Map<List<HotelDto>>(hotelDomainModel));
         }
