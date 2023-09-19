@@ -6,6 +6,7 @@ namespace HotelReviewsAPI.Repositories
     {
         Task<List<Hotel>> GetAllAsync(string? filterOn = null, string? filterQuery = null,
             string? sortBy = null, bool? isAscending = true);
+
         Task<Hotel> GetByIdAsync(Guid id);
         Task<Hotel> CreateAsync(Hotel hotel);
         Task<Hotel> UpdateAsync(Guid id, Hotel hotel);
