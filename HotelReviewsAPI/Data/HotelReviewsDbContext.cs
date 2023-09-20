@@ -5,7 +5,7 @@ namespace HotelReviewsAPI.Data
 {
     public class HotelReviewsDbContext : DbContext
     {
-        public HotelReviewsDbContext(DbContextOptions<HotelReviewsAuthDbContext> dbContextOptions) : base(dbContextOptions)
+        public HotelReviewsDbContext(DbContextOptions<HotelReviewsDbContext> dbContextOptions) : base(dbContextOptions)
         {
 
         }
