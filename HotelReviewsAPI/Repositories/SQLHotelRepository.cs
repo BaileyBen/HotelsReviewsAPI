@@ -36,7 +36,7 @@ namespace HotelReviewsAPI.Repositories
         }
 
         public async Task<List<Hotel>> GetAllAsync(string? filterOn = null, string? filterQuery = null,
-            string? sortBy = null, bool? isAscending = true)
+            string? sortBy = null, bool? isAscending = true, int pageNumber = 1, int pageSize = 1000)
         {
             var hotels = _dbContext.Hotels.Include("Reviews").AsQueryable();
 
@@ -61,8 +61,11 @@ namespace HotelReviewsAPI.Repositories
             {
                 hotels = (bool)isAscending ? hotels.OrderBy(x => x.Location) : hotels.OrderByDescending(x => x.Location);
             }
-            //return await _dbContext.Hotels.Include("Reviews").AsQueryable().ToListAsync();
-            return await hotels.ToListAsync();
+
+            //Pagination
+            var skipResults = (pageNumber -1) * pageSize;
+
+            return await hotels.Skip(skipResults).Take(pageSize).ToListAsync();
         }
 
         public async Task<Hotel> GetByIdAsync(Guid id)
