@@ -25,6 +25,9 @@ namespace HotelReviewsAPI
             builder.Services.AddDbContext<HotelReviewsDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("HotelsReviewsConnectionString")));
 
+            builder.Services.AddDbContext<HotelReviewsAuthDbContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("HotelReviewsAuthConnectionString")));
+
             builder.Services.AddScoped<IHotelsRepository, SQLHotelRepository>();
             builder.Services.AddScoped<IReviewsRepository, SQLReviewRepository>();
 
