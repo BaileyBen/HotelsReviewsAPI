@@ -1,4 +1,5 @@
 ﻿using HotelReviewsAPI.Models.DTO;
+using HotelReviewsAPI.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,12 @@ namespace HotelReviewsAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserManager<IdentityUser> userManager;
+        private readonly ITokenRepository tokenRepository;
 
-        public AuthController(UserManager<IdentityUser> userManager)
+        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepository)
         {
             this.userManager = userManager;
+            this.tokenRepository = tokenRepository;
         }
 
         [HttpPost]
@@ -57,9 +60,24 @@ namespace HotelReviewsAPI.Controllers
 
                 if (checkPasswordResult)
                 {
+                    var roles = await userManager.GetRolesAsync(user);
+
+                    if (roles != null)
+                    {
+                        var jwtToken = tokenRepository.CreateJwtToken(user, roles.ToList());
+
+                        var response = new LoginResponseDto
+                        {
+                            JwtToken = jwtToken
+                        };
+
+                        return Ok(response);
+                    }
+            
                     return Ok();
                 }
             }
+
             return BadRequest("Username or Password incorrect");
         }
     }

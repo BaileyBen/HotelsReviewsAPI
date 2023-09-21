@@ -35,7 +35,7 @@ namespace HotelReviewsAPI.Controllers
 
         [HttpGet]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> GetById([FromRoute]Guid id)
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             var hotelDomainModel = await hotelRepository.GetByIdAsync(id);
 

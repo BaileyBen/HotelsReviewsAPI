@@ -13,7 +13,6 @@ namespace HotelReviewsAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class ReviewsController : ControllerBase
     {
         private readonly HotelReviewsDbContext dbContext;
@@ -28,6 +27,7 @@ namespace HotelReviewsAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
             var reviewDomainModel = await reviewsRepository.GetAllAsync();
@@ -37,6 +37,7 @@ namespace HotelReviewsAPI.Controllers
 
         [HttpGet]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             var reviewDomainModel = await reviewsRepository.GetByIdAsync(id);
@@ -45,6 +46,7 @@ namespace HotelReviewsAPI.Controllers
         }
 
         [HttpPost("/api/hotels/{hotelIdOrName}/reviews")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateReviewForHotel(string hotelIdOrName, [FromBody] AddReviewRequestDto addReviewRequestDto, [FromQuery] string userName)
         {
             if (!Guid.TryParse(hotelIdOrName, out var hotelId))
@@ -78,6 +80,7 @@ namespace HotelReviewsAPI.Controllers
 
         [HttpPut]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid id, UpdateReviewRequestDto updateReviewRequestDto)
         {
             var reviewDomainModel = mapper.Map<Review>(updateReviewRequestDto);
@@ -92,6 +95,7 @@ namespace HotelReviewsAPI.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var deletedDomainModel = await reviewsRepository.DeleteAsync(id);
