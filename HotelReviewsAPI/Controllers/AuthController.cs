@@ -44,5 +44,23 @@ namespace HotelReviewsAPI.Controllers
 
             return BadRequest("Something went wrong");
         }
+
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
+        {
+            var user = await userManager.FindByEmailAsync(loginRequestDto.Username);
+
+            if (user != null)
+            {
+                var checkPasswordResult = await userManager.CheckPasswordAsync(user, loginRequestDto.Passsword);
+
+                if (checkPasswordResult)
+                {
+                    return Ok();
+                }
+            }
+            return BadRequest("Username or Password incorrect");
+        }
     }
 }
