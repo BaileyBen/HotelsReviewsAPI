@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 using System.Diagnostics.Metrics;
 using Microsoft.AspNetCore.Authorization;
+using System.Text.Json;
 
 namespace HotelReviewsAPI.Controllers
 {
@@ -18,19 +19,26 @@ namespace HotelReviewsAPI.Controllers
         private readonly HotelReviewsDbContext dbContext;
         private readonly IReviewsRepository reviewsRepository;
         private readonly IMapper mapper;
+        private readonly ILogger<ReviewsController> logger;
 
-        public ReviewsController(HotelReviewsDbContext dbContext, IReviewsRepository reviewsRepository, IMapper mapper)
+        public ReviewsController(HotelReviewsDbContext dbContext, IReviewsRepository reviewsRepository, IMapper mapper,
+            ILogger<ReviewsController> logger)
         {
             this.dbContext = dbContext;
             this.reviewsRepository = reviewsRepository;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         [HttpGet]
         [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
+            logger.LogInformation("GetAll Action Method was invoked");
+
             var reviewDomainModel = await reviewsRepository.GetAllAsync();
+
+            logger.LogInformation($"Finished GetAllReviewsRequest request with data: {JsonSerializer.Serialize(reviewDomainModel)}");
 
             return Ok(mapper.Map<List<ReviewDto>>(reviewDomainModel));
         }
