@@ -1,7 +1,6 @@
 # HotelReviewsAPI - ASP.NET WEB API ( .NET 7) 
 Hotel Reviews ASP.NET Core Web API 🏨✍️
 What's it all about? This API provides a platform where users can effortlessly sign up, log in, and share their hotel experiences through reviews. Whether it's a memorable stay or a hidden gem, our platform makes it easy to share and discover the best hotels.
-
 Noteworthy Features & Accomplishments:
 
 * Async Excellence: Implemented asynchronous programming to enhance performance and responsiveness.
